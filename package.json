@@ -1,0 +1,93 @@
+{
+  "name": "nix-environment",
+  "displayName": "nix-environment",
+  "description": "Select Nix environment",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.72.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "nix-environment.enable",
+        "title": "Nix environment: enable extension"
+      },
+      {
+        "command": "nix-environment.disable",
+        "title": "Nix environment: disable extension"
+      },
+      {
+        "command": "nix-environment.clear",
+        "title": "Nix environment: clear applied environment"
+      },
+      {
+        "command": "nix-environment.reload",
+        "title": "Nix environment: reload environment file"
+      },
+      {
+        "command": "nix-environment.select-environment-file",
+        "title": "Nix environment: select *.nix file"
+      }
+    ],
+    "configuration": {
+      "title": "Nix environment",
+      "properties": {
+        "nix-environment.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to load environment from file and show popup with found *.nix files"
+        },
+        "nix-environment.environment-file": {
+          "type": "string",
+          "description": "File to use as environment"
+        }
+      }
+    },
+    "icons": {
+      "distro-nix": {
+          "description": "Nix icon",
+          "default": {
+              "fontPath": "./icons/icons.woff",
+              "fontCharacter": "\\e000"
+          }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "updateFont": "npx ts-node ./tools/updateFont.ts icons",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "vsix": "npx vsce package",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.0.0",
+    "@types/mocha": "^10.0.0",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.72.0",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "@vscode/test-electron": "^2.1.5",
+    "eslint": "^8.24.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.0.0",
+    "ts-loader": "^9.4.1",
+    "typescript": "^4.8.4",
+    "webfont": "^11.2.26",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  }
+}
